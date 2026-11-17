@@ -1,0 +1,16 @@
+# HarmonyOS / DevEco Studio ignores
+/node_modules
+/oh_modules
+/local.properties
+/.hvigor
+/.idea
+/.preview
+/build
+/**/build
+/.cxx
+*.hap
+*.har
+*.hsp
+*.app
+*.log
+.DS_Store

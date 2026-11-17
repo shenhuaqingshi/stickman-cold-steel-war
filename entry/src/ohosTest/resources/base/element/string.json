@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_test_desc",
+      "value": "火柴人冷兵器大战测试模块"
+    },
+    {
+      "name": "TestAbility_desc",
+      "value": "单元测试入口 Ability"
+    },
+    {
+      "name": "TestAbility_label",
+      "value": "测试运行器"
+    }
+  ]
+}

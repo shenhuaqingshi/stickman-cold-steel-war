@@ -1,0 +1,9 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "火柴人冷兵器大战主模块（Stage 模型入口 HAP）",
+  "main": "",
+  "author": "StickmanWar Team",
+  "license": "Apache-2.0",
+  "dependencies": {}
+}

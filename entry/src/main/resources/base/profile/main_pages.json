@@ -1,0 +1,11 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/CampaignPage",
+    "pages/SetupPage",
+    "pages/BattlePage",
+    "pages/BattleResultPage",
+    "pages/SavePage",
+    "pages/SettingsPage"
+  ]
+}

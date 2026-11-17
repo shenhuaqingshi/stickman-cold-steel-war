@@ -1,0 +1,15 @@
+{
+  "modelVersion": "5.0.0",
+  "name": "stickman-cold-steel-war",
+  "version": "1.0.0",
+  "description": "火柴人冷兵器大战（Stickman Cold Steel War）— HarmonyOS NEXT 单机冷兵器策略动作游戏",
+  "main": "",
+  "author": "StickmanWar Team",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@ohos/hypium": "1.0.19",
+    "@ohos/hamock": "1.0.0"
+  },
+  "dynamicDependencies": {}
+}
