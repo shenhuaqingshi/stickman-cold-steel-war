@@ -57,13 +57,50 @@ export enum FormationType {
   CIRCLE_DEFENSE = 'circle_def'  // 圆阵（四面受敌无侧后翼弱点，防骑兵包抄）
 }
 
-/** 主帅战术指令枚举 */
+/** 主帅与 AI 战场战术指令枚举（完整覆盖冷兵器复杂战术） */
 export enum TacticalOrder {
-  ADVANCE = 'advance',       // 稳步推进（保持阵型接敌）
-  HOLD_GROUND = 'hold',      // 原地坚守（死守阵地不追击）
-  ALL_OUT_CHARGE = 'charge', // 全军冲锋（解散阵型高速扑杀）
-  RETREAT = 'retreat',       // 交替撤退（向本阵后撤重整）
-  FLANK = 'flank'            // 侧翼包抄（绕开正面主战线切敌侧后）
+  ADVANCE = 'advance',                 // 稳步推进（保持阵型接敌）
+  HOLD_GROUND = 'hold',                // 原地坚守（据守高地/桥头不盲追）
+  ALL_OUT_CHARGE = 'charge',           // 全军冲锋（高速奔袭撞阵）
+  RETREAT = 'retreat',                 // 交替撤退（边退边格挡回撤重整）
+  FLANK = 'flank',                     // 侧翼迂回包抄（弧线绕开正面切侧后）
+  PINCER_ENCIRCLE = 'pincer_encircle', // 钳形夹击合围（双翼协同封堵退路）
+  FEIGNED_RETREAT = 'feigned_retreat', // 诈败诱敌（佯装后撤引敌脱离阵线入伏）
+  AMBUSH_HIDE = 'ambush_hide',         // 潜伏设伏（密林/反斜面隐蔽待机半渡而击）
+  RAID_SUPPLY = 'raid_supply'          // 断粮奇袭（绕过主力专门焚掠工兵与粮车）
+}
+
+/** 多军团多战线建制角色枚举（前锋、两翼、预备队、护粮各司其职） */
+export enum ArmyCorpsRole {
+  VANGUARD_CENTER = 'vanguard_center', // 中军前锋（正面抗线吸火）
+  LEFT_WING = 'left_wing',             // 左翼机动军团（北走廊迂回/护翼）
+  RIGHT_WING = 'right_wing',           // 右翼机动军团（南走廊包抄/护翼）
+  REAR_RESERVE = 'rear_reserve',       // 总预备队（关键时刻堵漏或决胜突击）
+  SIEGE_BATTERY = 'siege_battery',     // 远程攻城群（高地压制与拆城）
+  SUPPLY_ESCORT = 'supply_escort'      // 辎重护粮队（采集护卫与反偷袭）
+}
+
+/** 火柴人单兵程序化骨骼动作状态枚举（支撑真刀真枪拼杀视觉反馈） */
+export enum UnitActionState {
+  IDLE_READY = 'idle_ready',               // 持械戒备呼吸态
+  MARCH_RUN = 'march_run',                 // 行军奔跑摆臂迈腿态
+  CHARGE_SPRINT = 'charge_sprint',         // 压低身姿全力冲锋撞阵态
+  MELEE_WINDUP = 'melee_windup',           // 挥砍/刺击前摇蓄力态
+  MELEE_STRIKE = 'melee_strike',           // 刀劈/枪刺/斧砸命中挥击态
+  RANGED_DRAW_FIRE = 'ranged_draw_fire',   // 挽弓搭箭/踏张上弦抛射态
+  SHIELD_BLOCK = 'shield_block',           // 举盾格挡火星迸溅态
+  STAGGER_HIT = 'stagger_hit',             // 受击后仰/被战马撞飞击退态
+  ROUT_PANIC = 'rout_panic',               // 士气崩溃弃盾抱头溃逃态
+  DYING_FALL = 'dying_fall',               // 致命伤倾倒动画态
+  FALLEN_CORPSE = 'fallen_corpse'          // 战场倒地遗骸态（定量留存烘托惨烈战场）
+}
+
+/** 分队受围态势枚举（八象限受敌扇区实时判定） */
+export enum EncirclementState {
+  CLEAR = 'clear',             // 正面正常交战
+  FLANKED = 'flanked',         // 单侧或背后遭袭（伤害与士气损耗上升）
+  PINCERED = 'pincered',       // 钳形夹击（双方向钝角受敌，阵型松动持续掉士气）
+  ENCIRCLED = 'encircled'      // 铁桶合围（>=5扇区受敌且退路断绝，士气雪崩）
 }
 
 /** 主帅英雄模式武器切换枚举 */

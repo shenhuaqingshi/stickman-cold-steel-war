@@ -6,11 +6,11 @@ import {
 } from '../model/GameTypes';
 
 /**
- * 战役战略大地图静态拓扑配置（3600x2400 逻辑尺寸，8 大地理板块，36 座城关要塞）
+ * 战役战略大地图静态拓扑配置（3600x2400 逻辑尺寸，8 大地理板块，每板块均衡 5 座城关，共 40 节点）
  * 第 1 步：纯静态图结构配置，严格保持无向图邻接表对称性，供战役大地图与补给线模块使用
  */
 export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
-  // ==================== 区域 1：极北永冻霜原（霜原熊族，4 节点） ====================
+  // ==================== 区域 1：极北永冻霜原（霜原熊族，5 节点） ====================
   {
     id: 'sy_capital',
     name: '巨熊冰堡',
@@ -22,11 +22,11 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.SHUANGYUAN,
     terrain: TerrainType.SNOWFIELD,
     defenseLevel: 5,
-    goldYield: 130,
-    woodYield: 90,
-    grainYield: 140,
+    goldYield: 135,
+    woodYield: 95,
+    grainYield: 150,
     isSupplyDepot: true,
-    neighbors: ['sy_altar', 'sy_pass', 'sy_camp']
+    neighbors: ['sy_altar', 'sy_pass', 'sy_camp', 'sy_fjord']
   },
   {
     id: 'sy_altar',
@@ -35,13 +35,13 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionName: '极北永冻霜原',
     nodeType: CampaignNodeType.RESOURCE_HUB,
     x: 420,
-    y: 520,
+    y: 540,
     initialOwner: FactionId.SHUANGYUAN,
     terrain: TerrainType.SNOWFIELD,
     defenseLevel: 2,
     goldYield: 95,
-    woodYield: 75,
-    grainYield: 85,
+    woodYield: 80,
+    grainYield: 95,
     isSupplyDepot: false,
     neighbors: ['sy_capital', 'sy_pass', 'ty_cliff']
   },
@@ -51,14 +51,14 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionIndex: 1,
     regionName: '极北永冻霜原',
     nodeType: CampaignNodeType.FORTRESS_PASS,
-    x: 960,
-    y: 480,
+    x: 940,
+    y: 500,
     initialOwner: FactionId.SHUANGYUAN,
     terrain: TerrainType.HIGH_GROUND,
     defenseLevel: 4,
-    goldYield: 70,
-    woodYield: 65,
-    grainYield: 80,
+    goldYield: 75,
+    woodYield: 70,
+    grainYield: 90,
     isSupplyDepot: true,
     neighbors: ['sy_capital', 'sy_altar', 'sy_camp', 'cl_pass', 'ty_cliff']
   },
@@ -68,8 +68,8 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionIndex: 1,
     regionName: '极北永冻霜原',
     nodeType: CampaignNodeType.GRANARY_TOWN,
-    x: 1140,
-    y: 280,
+    x: 1120,
+    y: 320,
     initialOwner: FactionId.SHUANGYUAN,
     terrain: TerrainType.SNOWFIELD,
     defenseLevel: 3,
@@ -77,7 +77,24 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 120,
     grainYield: 115,
     isSupplyDepot: true,
-    neighbors: ['sy_capital', 'sy_pass', 'cl_pass']
+    neighbors: ['sy_capital', 'sy_pass', 'sy_fjord', 'cl_pass']
+  },
+  {
+    id: 'sy_fjord',
+    name: '冰湾猎港',
+    regionIndex: 1,
+    regionName: '极北永冻霜原',
+    nodeType: CampaignNodeType.GRANARY_TOWN,
+    x: 1320,
+    y: 170,
+    initialOwner: FactionId.SHUANGYUAN,
+    terrain: TerrainType.SNOWFIELD,
+    defenseLevel: 3,
+    goldYield: 80,
+    woodYield: 65,
+    grainYield: 110,
+    isSupplyDepot: false,
+    neighbors: ['sy_capital', 'sy_camp', 'cl_capital', 'xj_beacon']
   },
 
   // ==================== 区域 2：瀚海苍狼草原（苍狼汗国，5 节点） ====================
@@ -92,11 +109,11 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.CANGLANG,
     terrain: TerrainType.PLAIN,
     defenseLevel: 4,
-    goldYield: 135,
-    woodYield: 70,
-    grainYield: 150,
+    goldYield: 145,
+    woodYield: 80,
+    grainYield: 165,
     isSupplyDepot: true,
-    neighbors: ['cl_pass', 'cl_river', 'cl_fort']
+    neighbors: ['cl_pass', 'cl_river', 'cl_fort', 'sy_fjord']
   },
   {
     id: 'cl_pass',
@@ -109,9 +126,9 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.CANGLANG,
     terrain: TerrainType.HIGH_GROUND,
     defenseLevel: 4,
-    goldYield: 75,
-    woodYield: 60,
-    grainYield: 75,
+    goldYield: 85,
+    woodYield: 65,
+    grainYield: 85,
     isSupplyDepot: false,
     neighbors: ['cl_capital', 'cl_pasture', 'sy_camp', 'sy_pass', 'yl_ferry']
   },
@@ -126,9 +143,9 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.CANGLANG,
     terrain: TerrainType.PLAIN,
     defenseLevel: 2,
-    goldYield: 80,
-    woodYield: 55,
-    grainYield: 130,
+    goldYield: 90,
+    woodYield: 75,
+    grainYield: 145,
     isSupplyDepot: true,
     neighbors: ['cl_pass', 'cl_river', 'ty_bridge', 'yl_ferry']
   },
@@ -138,14 +155,14 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionIndex: 2,
     regionName: '瀚海苍狼草原',
     nodeType: CampaignNodeType.CROSSING_OUTPOST,
-    x: 2020,
+    x: 2040,
     y: 620,
     initialOwner: FactionId.CANGLANG,
     terrain: TerrainType.RIVER_FORD,
     defenseLevel: 3,
-    goldYield: 85,
-    woodYield: 65,
-    grainYield: 105,
+    goldYield: 90,
+    woodYield: 70,
+    grainYield: 115,
     isSupplyDepot: false,
     neighbors: ['cl_capital', 'cl_pasture', 'cl_fort', 'yl_pass', 'xj_plain']
   },
@@ -160,14 +177,14 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.CANGLANG,
     terrain: TerrainType.DESERT_DUNE,
     defenseLevel: 3,
-    goldYield: 90,
-    woodYield: 50,
-    grainYield: 70,
+    goldYield: 95,
+    woodYield: 55,
+    grainYield: 85,
     isSupplyDepot: false,
-    neighbors: ['cl_capital', 'cl_river', 'xj_capital', 'xj_plain']
+    neighbors: ['cl_capital', 'cl_river', 'xj_beacon', 'xj_capital', 'xj_plain']
   },
 
-  // ==================== 区域 3：铁脊古战场高原（玄甲重骑军团，4 节点） ====================
+  // ==================== 区域 3：铁脊古战场高原（玄甲重骑军团，5 节点） ====================
   {
     id: 'xj_capital',
     name: '玄甲棱堡',
@@ -183,7 +200,24 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 80,
     grainYield: 135,
     isSupplyDepot: true,
-    neighbors: ['xj_plain', 'xj_forge', 'cl_fort']
+    neighbors: ['xj_beacon', 'xj_plain', 'xj_forge', 'cl_fort']
+  },
+  {
+    id: 'xj_beacon',
+    name: '望北烽燧',
+    regionIndex: 3,
+    regionName: '铁脊古战场高原',
+    nodeType: CampaignNodeType.FORTRESS_PASS,
+    x: 2820,
+    y: 250,
+    initialOwner: FactionId.XUANJIA,
+    terrain: TerrainType.HIGH_GROUND,
+    defenseLevel: 4,
+    goldYield: 85,
+    woodYield: 65,
+    grainYield: 105,
+    isSupplyDepot: false,
+    neighbors: ['xj_capital', 'cl_fort', 'sy_fjord']
   },
   {
     id: 'xj_plain',
@@ -249,9 +283,9 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.TIEYING,
     terrain: TerrainType.HIGH_GROUND,
     defenseLevel: 5,
-    goldYield: 135,
-    woodYield: 110,
-    grainYield: 125,
+    goldYield: 140,
+    woodYield: 115,
+    grainYield: 130,
     isSupplyDepot: true,
     neighbors: ['ty_cliff', 'ty_fort', 'ty_mine']
   },
@@ -266,9 +300,9 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.TIEYING,
     terrain: TerrainType.HIGH_GROUND,
     defenseLevel: 5,
-    goldYield: 65,
+    goldYield: 70,
     woodYield: 85,
-    grainYield: 70,
+    grainYield: 75,
     isSupplyDepot: false,
     neighbors: ['ty_capital', 'ty_bridge', 'sy_altar', 'sy_pass']
   },
@@ -283,8 +317,8 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.TIEYING,
     terrain: TerrainType.BRIDGE_PASS,
     defenseLevel: 4,
-    goldYield: 80,
-    woodYield: 80,
+    goldYield: 85,
+    woodYield: 85,
     grainYield: 90,
     isSupplyDepot: false,
     neighbors: ['ty_cliff', 'ty_fort', 'cl_pasture', 'yl_ferry']
@@ -300,7 +334,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.TIEYING,
     terrain: TerrainType.FORT_WALL,
     defenseLevel: 4,
-    goldYield: 75,
+    goldYield: 80,
     woodYield: 90,
     grainYield: 95,
     isSupplyDepot: true,
@@ -319,7 +353,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     defenseLevel: 3,
     goldYield: 125,
     woodYield: 100,
-    grainYield: 70,
+    grainYield: 75,
     isSupplyDepot: false,
     neighbors: ['ty_capital', 'ty_fort', 'sm_oasis']
   },
@@ -411,7 +445,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     neighbors: ['yl_capital', 'yl_ferry', 'ty_fort', 'sm_post', 'wl_sentry']
   },
 
-  // ==================== 区域 6：金沙绿洲走廊（沙漠商盟，4 节点） ====================
+  // ==================== 区域 6：金沙绿洲走廊（沙漠商盟，5 节点） ====================
   {
     id: 'sm_capital',
     name: '黄金圣城',
@@ -423,11 +457,11 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.SHAMO,
     terrain: TerrainType.DESERT_DUNE,
     defenseLevel: 4,
-    goldYield: 195,
-    woodYield: 65,
-    grainYield: 120,
+    goldYield: 185,
+    woodYield: 60,
+    grainYield: 115,
     isSupplyDepot: true,
-    neighbors: ['sm_oasis', 'sm_canyon', 'sm_post']
+    neighbors: ['sm_oasis', 'sm_canyon', 'sm_post', 'sm_well']
   },
   {
     id: 'sm_oasis',
@@ -440,9 +474,9 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.SHAMO,
     terrain: TerrainType.DESERT_DUNE,
     defenseLevel: 2,
-    goldYield: 110,
-    woodYield: 70,
-    grainYield: 135,
+    goldYield: 105,
+    woodYield: 65,
+    grainYield: 130,
     isSupplyDepot: true,
     neighbors: ['sm_capital', 'sm_canyon', 'ty_mine']
   },
@@ -458,7 +492,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     terrain: TerrainType.HIGH_GROUND,
     defenseLevel: 4,
     goldYield: 95,
-    woodYield: 60,
+    woodYield: 55,
     grainYield: 75,
     isSupplyDepot: false,
     neighbors: ['sm_capital', 'sm_oasis', 'sm_post', 'ty_fort']
@@ -470,34 +504,51 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionName: '金沙绿洲走廊',
     nodeType: CampaignNodeType.RESOURCE_HUB,
     x: 1280,
-    y: 1920,
+    y: 1900,
     initialOwner: FactionId.SHAMO,
     terrain: TerrainType.DESERT_DUNE,
     defenseLevel: 3,
-    goldYield: 145,
-    woodYield: 70,
-    grainYield: 90,
+    goldYield: 140,
+    woodYield: 65,
+    grainYield: 85,
     isSupplyDepot: false,
-    neighbors: ['sm_capital', 'sm_canyon', 'yl_granary', 'wl_bridge']
+    neighbors: ['sm_capital', 'sm_canyon', 'sm_well', 'yl_granary', 'wl_bridge']
+  },
+  {
+    id: 'sm_well',
+    name: '流沙古井',
+    regionIndex: 6,
+    regionName: '金沙绿洲走廊',
+    nodeType: CampaignNodeType.CROSSING_OUTPOST,
+    x: 1040,
+    y: 2160,
+    initialOwner: FactionId.SHAMO,
+    terrain: TerrainType.DESERT_DUNE,
+    defenseLevel: 3,
+    goldYield: 125,
+    woodYield: 55,
+    grainYield: 105,
+    isSupplyDepot: false,
+    neighbors: ['sm_capital', 'sm_post', 'wl_bridge']
   },
 
-  // ==================== 区域 7：南疆迷雾幽林（雾林猎手，4 节点） ====================
+  // ==================== 区域 7：南疆迷雾幽林（雾林猎手，5 节点） ====================
   {
     id: 'wl_capital',
     name: '古树王庭',
     regionIndex: 7,
     regionName: '南疆迷雾幽林',
     nodeType: CampaignNodeType.CAPITAL_CITADEL,
-    x: 1980,
-    y: 2040,
+    x: 1960,
+    y: 2020,
     initialOwner: FactionId.WULIN,
     terrain: TerrainType.DENSE_FOREST,
     defenseLevel: 5,
-    goldYield: 120,
-    woodYield: 165,
-    grainYield: 130,
+    goldYield: 115,
+    woodYield: 150,
+    grainYield: 120,
     isSupplyDepot: true,
-    neighbors: ['wl_bridge', 'wl_sentry', 'wl_valley']
+    neighbors: ['wl_bridge', 'wl_sentry', 'wl_valley', 'wl_altar']
   },
   {
     id: 'wl_bridge',
@@ -506,15 +557,15 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionName: '南疆迷雾幽林',
     nodeType: CampaignNodeType.CROSSING_OUTPOST,
     x: 1620,
-    y: 1920,
+    y: 1940,
     initialOwner: FactionId.WULIN,
     terrain: TerrainType.DENSE_FOREST,
     defenseLevel: 4,
-    goldYield: 80,
-    woodYield: 130,
-    grainYield: 95,
+    goldYield: 75,
+    woodYield: 115,
+    grainYield: 85,
     isSupplyDepot: false,
-    neighbors: ['wl_capital', 'wl_sentry', 'sm_post']
+    neighbors: ['wl_capital', 'wl_sentry', 'sm_post', 'sm_well']
   },
   {
     id: 'wl_sentry',
@@ -528,8 +579,8 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     terrain: TerrainType.DENSE_FOREST,
     defenseLevel: 4,
     goldYield: 75,
-    woodYield: 125,
-    grainYield: 95,
+    woodYield: 115,
+    grainYield: 90,
     isSupplyDepot: true,
     neighbors: ['wl_capital', 'wl_bridge', 'wl_valley', 'yl_granary']
   },
@@ -539,16 +590,33 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     regionIndex: 7,
     regionName: '南疆迷雾幽林',
     nodeType: CampaignNodeType.FORTRESS_PASS,
-    x: 2340,
-    y: 1880,
+    x: 2320,
+    y: 1860,
     initialOwner: FactionId.WULIN,
     terrain: TerrainType.DENSE_FOREST,
     defenseLevel: 4,
-    goldYield: 85,
-    woodYield: 120,
-    grainYield: 85,
+    goldYield: 80,
+    woodYield: 110,
+    grainYield: 80,
     isSupplyDepot: false,
-    neighbors: ['wl_capital', 'wl_sentry', 'xy_ferry', 'xy_camp']
+    neighbors: ['wl_capital', 'wl_sentry', 'wl_altar', 'xy_ferry', 'xy_camp']
+  },
+  {
+    id: 'wl_altar',
+    name: '灵木祭坛',
+    regionIndex: 7,
+    regionName: '南疆迷雾幽林',
+    nodeType: CampaignNodeType.RESOURCE_HUB,
+    x: 2260,
+    y: 2180,
+    initialOwner: FactionId.WULIN,
+    terrain: TerrainType.DENSE_FOREST,
+    defenseLevel: 3,
+    goldYield: 75,
+    woodYield: 110,
+    grainYield: 75,
+    isSupplyDepot: false,
+    neighbors: ['wl_capital', 'wl_valley', 'xy_camp']
   },
 
   // ==================== 区域 8：幽暗血月盆地（血月祭司团，5 节点） ====================
@@ -614,11 +682,11 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     initialOwner: FactionId.XUEYUE,
     terrain: TerrainType.DENSE_FOREST,
     defenseLevel: 3,
-    goldYield: 80,
+    goldYield: 85,
     woodYield: 95,
-    grainYield: 115,
+    grainYield: 120,
     isSupplyDepot: false,
-    neighbors: ['xy_capital', 'xy_ferry', 'wl_valley']
+    neighbors: ['xy_capital', 'xy_ferry', 'wl_valley', 'wl_altar']
   },
   {
     id: 'xy_mound',

@@ -2,11 +2,23 @@
   "float": [
     {
       "name": "title_font_size",
-      "value": "26fp"
+      "value": "28fp"
+    },
+    {
+      "name": "subtitle_font_size",
+      "value": "18fp"
     },
     {
       "name": "body_font_size",
-      "value": "14fp"
+      "value": "15fp"
+    },
+    {
+      "name": "tablet_touch_min_height",
+      "value": "48vp"
+    },
+    {
+      "name": "tablet_panel_padding",
+      "value": "20vp"
     }
   ]
 }

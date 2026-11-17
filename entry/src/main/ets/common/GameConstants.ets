@@ -16,6 +16,12 @@ export class GameConstants {
   public static readonly SPATIAL_GRID_CELL_SIZE: number = 120;
   /** 视口裁剪安全外扩边距（px），防止长枪/投石轨迹边缘闪烁 */
   public static readonly VIEWPORT_CULL_MARGIN: number = 96;
+  /** 战场常规步兵基础视野半径（px，战争迷雾索敌） */
+  public static readonly VISION_RADIUS_INFANTRY: number = 420;
+  /** 战场侦察骑兵基础视野半径（px） */
+  public static readonly VISION_RADIUS_CAVALRY: number = 580;
+  /** 长枪架枪迎击冲锋骑兵时的动能附加破甲率 */
+  public static readonly BRACED_ANTICAV_BONUS_PEN: number = 0.30;
 
   // ==================== 战役战略大地图尺寸（硬性要求 8 区域、30+ 节点） ====================
   /** 战役战略地图逻辑宽度（px） */
@@ -24,12 +30,26 @@ export class GameConstants {
   public static readonly CAMPAIGN_MAP_HEIGHT: number = 2400;
   /** 战役大地图地理大区数量 */
   public static readonly CAMPAIGN_REGION_COUNT: number = 8;
-  /** 战役大地图城池/关隘/要塞总节点数 */
-  public static readonly CAMPAIGN_NODE_COUNT: number = 36;
+  /** 战役大地图城池/关隘/要塞总节点数（每大区均衡 5 座城关，共 40 座） */
+  public static readonly CAMPAIGN_NODE_COUNT: number = 40;
   /** 战役地图最小缩放倍率 */
   public static readonly CAMPAIGN_ZOOM_MIN: number = 0.45;
   /** 战役地图最大缩放倍率 */
   public static readonly CAMPAIGN_ZOOM_MAX: number = 1.80;
+
+  // ==================== 鸿蒙平板（MatePad）大屏触控与视口交互常量 ====================
+  /** 平板手指触控按钮最小高度（vp，禁止使用手机端局促小按钮） */
+  public static readonly TABLET_MIN_TOUCH_HEIGHT_VP: number = 48;
+  /** 平板主操作按钮标准高度（vp） */
+  public static readonly TABLET_PRIMARY_BTN_HEIGHT_VP: number = 54;
+  /** 平板战场视口最小鸟瞰缩放倍率（大屏一次纵览多条战线） */
+  public static readonly BATTLE_ZOOM_MIN: number = 0.45;
+  /** 平板战场视口最大特写缩放倍率（近看火柴人刀剑格挡与英雄拼杀） */
+  public static readonly BATTLE_ZOOM_MAX: number = 1.65;
+  /** 手写笔（M-Pencil）点选士兵/编队精准拾取容差半径（px） */
+  public static readonly STYLUS_PICK_RADIUS_PX: number = 24;
+  /** 手指触控点选编队放大拾取热区半径（px） */
+  public static readonly FINGER_PICK_RADIUS_PX: number = 44;
 
   // ==================== 帧率与对象池容量预算 ====================
   /** 逻辑模拟步进频率（Hz） */
@@ -40,8 +60,36 @@ export class GameConstants {
   public static readonly MAX_UNIT_POOL_SIZE: number = 600;
   /** 单场战斗投射物对象池上限 */
   public static readonly MAX_PROJECTILE_POOL_SIZE: number = 400;
+  /** 战场最大保留倒地遗骸/折断旌旗数量（环形覆盖，兼顾古战场惨烈实感与渲染性能） */
+  public static readonly MAX_FALLEN_CORPSE_DECAL: number = 150;
   /** 单场方阵人口标准上限（单方） */
   public static readonly DEFAULT_ARMY_POP_CAP: number = 240;
+  /** 单方最大独立可调度军团编组数（前锋/左翼/右翼/预备队/远程群/护粮队） */
+  public static readonly MAX_ARMY_CORPS_GROUPS: number = 6;
+  /** 主帅重击命中顿帧时长（ms，强化冷兵器劈砍卡肉打击实感） */
+  public static readonly HERO_HIT_STOP_MS: number = 40;
+
+  // ==================== 战场开局标准资源（经行军接敌耗时数学标定） ====================
+  /** 战场标准初始金币 */
+  public static readonly BATTLE_INIT_GOLD: number = 500;
+  /** 战场标准初始木材 */
+  public static readonly BATTLE_INIT_WOOD: number = 350;
+  /** 战场标准初始携行粮草（支撑百人军团约 3.5~4.5 分钟高强度作战，防接敌前提前饿死） */
+  public static readonly BATTLE_INIT_GRAIN: number = 1200;
+
+  // ==================== 侧背包抄、钳形夹击、合围与半渡而击战术常数 ====================
+  /** 侧翼受击伤害倍率（60°~135°） */
+  public static readonly FLANK_DAMAGE_MULTIPLIER: number = 1.25;
+  /** 背击突袭伤害倍率（>135°，且无视正面盾防与架枪） */
+  public static readonly REAR_DAMAGE_MULTIPLIER: number = 1.45;
+  /** 钳形夹击（>=2个互成>=120°非正面方向同时受敌）每秒额外士气流失 */
+  public static readonly PINCER_MORALE_DRAIN_PER_SEC: number = 2.2;
+  /** 铁桶合围判定所需受敌扇区数（8象限中至少5个扇区有敌且退路受阻） */
+  public static readonly ENCIRCLEMENT_MIN_OCTANTS: number = 5;
+  /** 铁桶合围状态下每秒士气雪崩流失值 */
+  public static readonly ENCIRCLEMENT_MORALE_DRAIN_PER_SEC: number = 4.8;
+  /** 渡河“半渡而击”（分队 30%~80% 成员涉水首尾脱节时受击）额外易伤倍率 */
+  public static readonly HALF_FORD_VULNERABILITY_MULT: number = 1.20;
 
   // ==================== 士气与主帅边界阈值 ====================
   /** 初始标准士气 */

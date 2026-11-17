@@ -4,3 +4,21 @@
 -enable-toplevel-obfuscation
 -enable-filename-obfuscation
 -compact
+
+# 保留数据模型、静态配置表与路由/本地存档 JSON 序列化字段，防止 Release 混淆导致存档读写与页面传参失效
+-keep
+./src/main/ets/model/**
+-keep
+./src/main/ets/config/**
+-keep-property-name
+modeKey
+modeTitle
+factionId
+slotIndex
+turnNumber
+controlledNodes
+updatedAtIso
+isEmpty
+gold
+wood
+grain

@@ -7,10 +7,21 @@ const DOMAIN: number = 0x0001;
 const TAG: string = 'StickmanColdSteelWar';
 
 /**
- * 游戏主入口 Ability（HarmonyOS NEXT Stage 模型）
- * 负责初始化横屏沉浸式游戏窗口并加载主菜单路由页面
+ * 游戏主入口 Ability（HarmonyOS NEXT Stage 模型 · 鸿蒙平板 MatePad 优先适配）
+ * 负责初始化平板大屏窗口、监听横竖屏旋转与分屏/悬浮窗尺寸变化，确保多窗动态布局不崩不裁切
  */
 export default class EntryAbility extends UIAbility {
+  private mainWinRef: window.Window | null = null;
+
+  private updateWindowMetrics(widthPx: number, heightPx: number): void {
+    const safeW: number = widthPx > 0 ? widthPx : 2560;
+    const safeH: number = heightPx > 0 ? heightPx : 1600;
+    AppStorage.setOrCreate<number>('winWidthPx', safeW);
+    AppStorage.setOrCreate<number>('winHeightPx', safeH);
+    // 宽高比 >= 1.05 视为横屏/宽幅平板双栏模式；竖屏或窄分屏时自动平滑降级为上下双区响应式布局
+    AppStorage.setOrCreate<boolean>('isWideScreen', safeW >= safeH * 1.05);
+  }
+
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     try {
       this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_DARK);
@@ -18,6 +29,7 @@ export default class EntryAbility extends UIAbility {
       const error = err as BusinessError;
       hilog.warn(DOMAIN, TAG, 'setColorMode warning: %{public}s', JSON.stringify(error));
     }
+    AppStorage.setOrCreate<boolean>('isWideScreen', true);
     hilog.info(DOMAIN, TAG, 'EntryAbility onCreate, launchReason=%{public}d', launchParam.launchReason);
   }
 
@@ -28,16 +40,24 @@ export default class EntryAbility extends UIAbility {
   onWindowStageCreate(windowStage: window.WindowStage): void {
     hilog.info(DOMAIN, TAG, 'EntryAbility onWindowStageCreate');
 
-    // 配置横屏全屏沉浸式窗口，适配大地图与宽幅冷兵器战场视野
+    // 适配鸿蒙平板（MatePad）：默认横屏大视野优先，同时兼容横竖屏自由旋转、分屏与悬浮窗模式
     windowStage.getMainWindow().then((mainWindow: window.Window) => {
+      this.mainWinRef = mainWindow;
+      const rect: window.Rect = mainWindow.getWindowProperties().windowRect;
+      this.updateWindowMetrics(rect.width, rect.height);
+
+      mainWindow.on('windowSizeChange', (size: window.Size) => {
+        this.updateWindowMetrics(size.width, size.height);
+      });
+
       mainWindow.setWindowLayoutFullScreen(true).catch((err: BusinessError) => {
-        hilog.warn(DOMAIN, TAG, 'setWindowLayoutFullScreen failed: %{public}s', JSON.stringify(err));
+        hilog.warn(DOMAIN, TAG, 'setWindowLayoutFullScreen skipped in multi-window: %{public}s', JSON.stringify(err));
       });
       mainWindow.setWindowSystemBarEnable([]).catch((err: BusinessError) => {
-        hilog.warn(DOMAIN, TAG, 'setWindowSystemBarEnable failed: %{public}s', JSON.stringify(err));
+        hilog.warn(DOMAIN, TAG, 'setWindowSystemBarEnable skipped in multi-window: %{public}s', JSON.stringify(err));
       });
-      mainWindow.setPreferredOrientation(window.Orientation.AUTO_ROTATION_LANDSCAPE).catch((err: BusinessError) => {
-        hilog.warn(DOMAIN, TAG, 'setPreferredOrientation failed: %{public}s', JSON.stringify(err));
+      mainWindow.setPreferredOrientation(window.Orientation.AUTO_ROTATION).catch((err: BusinessError) => {
+        hilog.warn(DOMAIN, TAG, 'setPreferredOrientation warning: %{public}s', JSON.stringify(err));
       });
     }).catch((err: BusinessError) => {
       hilog.warn(DOMAIN, TAG, 'getMainWindow failed: %{public}s', JSON.stringify(err));
@@ -53,6 +73,15 @@ export default class EntryAbility extends UIAbility {
   }
 
   onWindowStageDestroy(): void {
+    if (this.mainWinRef !== null) {
+      try {
+        this.mainWinRef.off('windowSizeChange');
+      } catch (err) {
+        const error = err as BusinessError;
+        hilog.warn(DOMAIN, TAG, 'off windowSizeChange warning: %{public}s', JSON.stringify(error));
+      }
+      this.mainWinRef = null;
+    }
     hilog.info(DOMAIN, TAG, 'EntryAbility onWindowStageDestroy');
   }
 
