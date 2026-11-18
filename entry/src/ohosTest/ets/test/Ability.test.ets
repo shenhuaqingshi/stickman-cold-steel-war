@@ -70,8 +70,10 @@ export default function abilityTest(): void {
     });
 
     it('assertCampaignGraphSymmetricAndFullyConnected', 0, () => {
+      let directedEdgeCount: number = 0;
       for (let i: number = 0; i < CAMPAIGN_MAP_NODES.length; i++) {
         const nodeA: CampaignNodeConfig = CAMPAIGN_MAP_NODES[i];
+        directedEdgeCount += nodeA.neighbors.length;
         for (let j: number = 0; j < nodeA.neighbors.length; j++) {
           const neighborId: string = nodeA.neighbors[j];
           let foundSymmetric: boolean = false;
@@ -85,6 +87,7 @@ export default function abilityTest(): void {
           expect(foundSymmetric).assertTrue();
         }
       }
+      expect(directedEdgeCount).assertEqual(GameConstants.CAMPAIGN_ROAD_COUNT * 2);
 
       // BFS 验证全图 40 节点处于同一连通分量，无孤立死岛
       const visitedIds: string[] = [CAMPAIGN_MAP_NODES[0].id];

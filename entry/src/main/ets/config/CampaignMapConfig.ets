@@ -6,8 +6,8 @@ import {
 } from '../model/GameTypes';
 
 /**
- * 战役战略大地图静态拓扑配置（3600x2400 逻辑尺寸，8 大地理板块，每板块均衡 5 座城关，共 40 节点）
- * 第 1 步：纯静态图结构配置，严格保持无向图邻接表对称性，供战役大地图与补给线模块使用
+ * 战役战略大地图静态拓扑配置（3600x2400 逻辑尺寸，8 大地理板块，每板块均衡 5 座城关，共 40 节点、78 条无交叉对称双向道路）
+ * 第 1 步：纯静态平面图结构配置，严格保持无向图邻接表对称性与零道路交叉，供战役大地图与补给线模块使用
  */
 export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
   // ==================== 区域 1：极北永冻霜原（霜原熊族，5 节点） ====================
@@ -26,7 +26,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 95,
     grainYield: 150,
     isSupplyDepot: true,
-    neighbors: ['sy_altar', 'sy_pass', 'sy_camp', 'sy_fjord']
+    neighbors: ['sy_altar', 'sy_pass', 'sy_camp']
   },
   {
     id: 'sy_altar',
@@ -94,7 +94,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 65,
     grainYield: 110,
     isSupplyDepot: false,
-    neighbors: ['sy_capital', 'sy_camp', 'cl_capital', 'xj_beacon']
+    neighbors: ['sy_camp', 'cl_capital', 'xj_beacon']
   },
 
   // ==================== 区域 2：瀚海苍狼草原（苍狼汗国，5 节点） ====================
@@ -130,7 +130,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 65,
     grainYield: 85,
     isSupplyDepot: false,
-    neighbors: ['cl_capital', 'cl_pasture', 'sy_camp', 'sy_pass', 'yl_ferry']
+    neighbors: ['cl_capital', 'cl_pasture', 'sy_camp', 'sy_pass']
   },
   {
     id: 'cl_pasture',
@@ -164,7 +164,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 70,
     grainYield: 115,
     isSupplyDepot: false,
-    neighbors: ['cl_capital', 'cl_pasture', 'cl_fort', 'yl_pass', 'xj_plain']
+    neighbors: ['cl_capital', 'cl_pasture', 'cl_fort', 'yl_pass']
   },
   {
     id: 'cl_fort',
@@ -181,7 +181,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 55,
     grainYield: 85,
     isSupplyDepot: false,
-    neighbors: ['cl_capital', 'cl_river', 'xj_beacon', 'xj_capital', 'xj_plain']
+    neighbors: ['cl_capital', 'cl_river', 'xj_beacon', 'xj_plain']
   },
 
   // ==================== 区域 3：铁脊古战场高原（玄甲重骑军团，5 节点） ====================
@@ -200,7 +200,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 80,
     grainYield: 135,
     isSupplyDepot: true,
-    neighbors: ['xj_beacon', 'xj_plain', 'xj_forge', 'cl_fort']
+    neighbors: ['xj_beacon', 'xj_plain', 'xj_forge']
   },
   {
     id: 'xj_beacon',
@@ -234,7 +234,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 75,
     grainYield: 135,
     isSupplyDepot: true,
-    neighbors: ['xj_capital', 'xj_pass', 'cl_river', 'cl_fort', 'yl_forge']
+    neighbors: ['xj_capital', 'xj_pass', 'cl_fort', 'yl_forge']
   },
   {
     id: 'xj_pass',
@@ -408,7 +408,7 @@ export const CAMPAIGN_MAP_NODES: readonly CampaignNodeConfig[] = [
     woodYield: 70,
     grainYield: 95,
     isSupplyDepot: false,
-    neighbors: ['yl_capital', 'yl_pass', 'yl_granary', 'cl_pass', 'cl_pasture', 'ty_bridge']
+    neighbors: ['yl_capital', 'yl_pass', 'yl_granary', 'cl_pasture', 'ty_bridge']
   },
   {
     id: 'yl_forge',

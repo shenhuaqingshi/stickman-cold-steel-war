@@ -32,6 +32,8 @@ export class GameConstants {
   public static readonly CAMPAIGN_REGION_COUNT: number = 8;
   /** 战役大地图城池/关隘/要塞总节点数（每大区均衡 5 座城关，共 40 座） */
   public static readonly CAMPAIGN_NODE_COUNT: number = 40;
+  /** 战役大地图无交叉对称双向道路总数 */
+  public static readonly CAMPAIGN_ROAD_COUNT: number = 78;
   /** 战役地图最小缩放倍率 */
   public static readonly CAMPAIGN_ZOOM_MIN: number = 0.45;
   /** 战役地图最大缩放倍率 */

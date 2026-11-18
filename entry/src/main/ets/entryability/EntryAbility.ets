@@ -2,6 +2,8 @@ import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.Ab
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { BusinessError } from '@kit.BasicServicesKit';
+import { GameSessionCoordinator } from '../core/session/GameSessionCoordinator';
+import { HarmonyFilePersistenceBackend } from './HarmonyFilePersistenceBackend';
 
 const DOMAIN: number = 0x0001;
 const TAG: string = 'StickmanColdSteelWar';
@@ -30,6 +32,15 @@ export default class EntryAbility extends UIAbility {
       hilog.warn(DOMAIN, TAG, 'setColorMode warning: %{public}s', JSON.stringify(error));
     }
     AppStorage.setOrCreate<boolean>('isWideScreen', true);
+    try {
+      const sandboxBackend: HarmonyFilePersistenceBackend = new HarmonyFilePersistenceBackend(
+        this.context.filesDir
+      );
+      GameSessionCoordinator.getInstance().bindPersistenceBackend(sandboxBackend);
+    } catch (err) {
+      const error = err as BusinessError;
+      hilog.warn(DOMAIN, TAG, 'bindPersistenceBackend fallback warning: %{public}s', JSON.stringify(error));
+    }
     hilog.info(DOMAIN, TAG, 'EntryAbility onCreate, launchReason=%{public}d', launchParam.launchReason);
   }
 
